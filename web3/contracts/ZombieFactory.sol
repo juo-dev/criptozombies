@@ -1,4 +1,4 @@
-/*
+// SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.28;
 
 contract ZombieFactory {
@@ -16,7 +16,8 @@ contract ZombieFactory {
     Zombie[] public zombies;
 
     function _createZombie(string memory _name, uint _dna) private {
-        uint id = zombies.push(Zombie(_name, _dna)) - 1;
+        uint id = zombies.length;
+        zombies.push(Zombie(_name, _dna));
         emit NewZombie(id, _name, _dna);
     }
 
@@ -30,4 +31,3 @@ contract ZombieFactory {
         _createZombie(_name, randDna);
     }
 }
-*/

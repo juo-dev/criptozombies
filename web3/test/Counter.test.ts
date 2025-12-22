@@ -1,7 +1,5 @@
 import assert from 'node:assert/strict'
-import { describe, it, before } from 'node:test'
-import { CounterAbi } from '../abis/Counter.abi.js'
-
+import { describe, it } from 'node:test'
 import { network } from 'hardhat'
 
 describe('Counter', async function () {
@@ -30,7 +28,7 @@ describe('Counter', async function () {
 
     const events = await publicClient.getContractEvents({
       address: counter.address,
-      abi: CounterAbi,
+      abi: counter.abi,
       eventName: 'Increment',
       fromBlock: deploymentBlockNumber,
       strict: true,
@@ -39,7 +37,8 @@ describe('Counter', async function () {
     // check that the aggregated events match the current value
     let total = 0n
     for (const event of events) {
-      total += event.args.by
+      const { by } = event.args
+      if (by) total += by
     }
 
     assert.equal(total, await counter.read.x())
