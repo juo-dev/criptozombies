@@ -94,7 +94,7 @@ describe('ZombieFactory', async function () {
 
     // Validar cada evento
     for (let i = 0; i < events.length; i++) {
-     const { zombieId, name, dna } = events[i].args
+      const { zombieId, name, dna } = events[i].args
 
       assert.equal(zombieId, BigInt(i), `Zombie ID should be ${i}`)
       assert.equal(name, zombieNames[i], `Zombie name should match`)
@@ -112,6 +112,14 @@ describe('ZombieFactory', async function () {
       assert.equal(zombie[0], zombieNames[i], 'Zombie name should match')
       assert.equal(typeof zombie[1], 'bigint', 'Zombie DNA should be a bigint')
     }
+
+    // validar total de zombies do contrato
+    const zombiesCount = await zombieFactory.read.getZombiesCount()
+    assert.equal(
+      zombiesCount,
+      BigInt(events.length),
+      'Zombies count should match events length'
+    )
   })
 
   it('Should generate different DNA for different names', async function () {

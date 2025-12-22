@@ -30,4 +30,8 @@ contract ZombieFactory {
         uint randDna = _generateRandomDna(_name);
         _createZombie(_name, randDna);
     }
+
+    function getZombiesCount() public view returns (uint) {
+        return zombies.length;
+    }
 }
