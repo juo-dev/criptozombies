@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import { network } from 'hardhat'
+import { ZombieFactoryAbi } from '../abis/ZombieFactory.abi.js'
 
 // Função para gerar nomes aleatórios de zombies
 function generateRandomZombieName(): string {
@@ -49,19 +50,14 @@ describe('ZombieFactory', async function () {
 
     const events = await publicClient.getContractEvents({
       address: zombieFactory.address,
-      abi: zombieFactory.abi,
+      abi: ZombieFactoryAbi,
       eventName: 'NewZombie',
       fromBlock: deploymentBlockNumber,
       strict: true,
     })
 
     assert.equal(events.length, 1, 'Should emit one NewZombie event')
-    const event = events[0]
-    const { zombieId, name, dna } = event.args as {
-      zombieId: bigint
-      name: string
-      dna: bigint
-    }
+    const { zombieId, name, dna } = events[0].args
 
     assert.equal(typeof zombieId, 'bigint', 'zombieId should be bigint')
     assert.equal(name, zombieName, 'Name should match')
@@ -87,7 +83,7 @@ describe('ZombieFactory', async function () {
     // Buscar todos os eventos NewZombie
     const events = await publicClient.getContractEvents({
       address: zombieFactory.address,
-      abi: zombieFactory.abi,
+      abi: ZombieFactoryAbi,
       eventName: 'NewZombie',
       fromBlock: deploymentBlockNumber,
       strict: true,
@@ -98,12 +94,7 @@ describe('ZombieFactory', async function () {
 
     // Validar cada evento
     for (let i = 0; i < events.length; i++) {
-      const event = events[i]
-      const { zombieId, name, dna } = event.args as {
-        zombieId: bigint
-        name: string
-        dna: bigint
-      }
+     const { zombieId, name, dna } = events[i].args
 
       assert.equal(zombieId, BigInt(i), `Zombie ID should be ${i}`)
       assert.equal(name, zombieNames[i], `Zombie name should match`)
