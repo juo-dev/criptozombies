@@ -8,6 +8,7 @@
   "[javascript]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "files.autoSave": "afterDelay",
+  "editor.fontSize": 12
 }
-

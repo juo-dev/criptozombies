@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "sync-abi": "node scripts/sync-abi.js"
+  },
   "dependencies": {
     "viem": "^2.43.2"
   }
