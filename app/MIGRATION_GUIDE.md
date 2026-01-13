@@ -7,11 +7,19 @@ O arquivo `zombieFactory.ts` foi completamente refatorado para usar **Viem** ao 
 ## Estrutura de Arquivos
 
 ```
-app/src/
-├── contracts/
-│   └── ZombieFactory.abi.ts    # ABI extraída para uso com Viem
-├── zombieFactory.ts            # Implementação principal refatorada
-└── example-usage.ts            # Exemplo de uso
+app/
+├── src/
+│   ├── contracts/
+│   │   └── ZombieFactory.abi.ts    # ABI extraída para uso com Viem
+│   └── zombieFactory.ts            # Implementação principal refatorada
+├── examples/
+│   ├── README.md                   # Guia dos exemplos
+│   ├── basic-usage.ts              # Exemplo básico para iniciantes
+│   ├── event-listening.ts          # Exemplos de eventos em tempo real
+│   └── advanced-patterns.ts        # Padrões avançados e estruturas de produção
+├── scripts/
+│   └── sync-abi.js                 # Script de sincronização da ABI
+└── package.json                    # Com script sync-abi
 ```
 
 **Importante**: A ABI está agora isolada dentro do projeto `app`, eliminando dependências cruzadas com o projeto `web3`. Isso permite que ambos os projetos sejam deployados independentemente.
@@ -105,38 +113,34 @@ interface ZombieDetails {
 
 ## Como Usar
 
-### 1. **Configuração Inicial**
+Consulte os exemplos na pasta `examples/` para diferentes casos de uso:
+
+### 1. **Uso Básico** (`examples/basic-usage.ts`)
 
 ```typescript
-import { ZombieFactory, setupZombieFactoryUI } from './zombieFactory'
+import { basicZombieFactoryExample } from './examples/basic-usage'
 
-// Substitua pelo endereço do seu contrato deployado
-const CONTRACT_ADDRESS = '0x...' as `0x${string}`
-const zombieFactory = new ZombieFactory(CONTRACT_ADDRESS)
+// Inicialização simples
+const cleanup = await basicZombieFactoryExample()
 ```
 
-### 2. **Setup da UI**
+### 2. **Eventos em Tempo Real** (`examples/event-listening.ts`)
 
 ```typescript
-// Configura event listeners automaticamente
-const cleanup = setupZombieFactoryUI()
+import { startEventListener } from './examples/event-listening'
 
-// Chame cleanup() quando não precisar mais (ex: component unmount)
+// Escuta eventos de todos os usuários
+const cleanup = startEventListener()
 ```
 
-### 3. **Uso Programático**
+### 3. **Aplicação Avançada** (`examples/advanced-patterns.ts`)
 
 ```typescript
-// Criar zombie
-const txHash = await zombieFactory.createRandomZombie('MyZombie')
+import { ZombieApp } from './examples/advanced-patterns'
 
-// Buscar zombie
-const zombie = await zombieFactory.getZombie(BigInt(0))
-
-// Escutar eventos
-const unwatch = zombieFactory.watchNewZombieEvents((event) => {
-  console.log('New zombie created:', event)
-})
+// App completo com cache, error handling, etc.
+const app = new ZombieApp(CONTRACT_ADDRESS)
+await app.initialize()
 ```
 
 ## Configuração Necessária

@@ -4,10 +4,10 @@ import {
   ZombieFactory,
   setupZombieFactoryUI,
   generateZombie,
-} from './zombieFactory'
+} from '../src/zombieFactory'
 
 // Example: Initialize and use ZombieFactory
-async function initializeApp() {
+export async function initializeApp() {
   // Replace with your actual deployed contract address
   const CONTRACT_ADDRESS =
     '0x1234567890123456789012345678901234567890' as `0x${string}`

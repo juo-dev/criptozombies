@@ -9,6 +9,9 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[solidity]": {
+    "editor.defaultFormatter": "NomicFoundation.hardhat-solidity"
+  },
   "files.autoSave": "afterDelay",
   "editor.fontSize": 12
 }
